@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mü's Memory – finde alle sechs Tierpaare in Mü's Arcade!" />
+    <title>Mü's Memory | Mü's Arcade</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Only the new leaderboard fields; the existing game styles stay in style.css. */
+        #score-form { display: grid; gap: .55rem; max-width: 19rem; margin: 1rem auto .5rem; }
+        #score-form label { font-weight: bold; }
+        #player-name { box-sizing: border-box; width: 100%; padding: .7rem; border: 2px solid #fa79d5;
+                       border-radius: .35rem; color: #fff; background: #191128; font: inherit; text-align: center; }
+        #player-name:focus-visible, #save-score-btn:focus-visible { outline: 2px solid #79f6ff; outline-offset: 2px; }
+        #save-score-btn { padding: .7rem; border: 2px solid #fa79d5; border-radius: .35rem;
+                          background: #351e4b; color: #fff; font: inherit; font-weight: bold; cursor: pointer; }
+        #save-score-btn:disabled { opacity: .6; cursor: default; }
+        #score-status { min-height: 1.3em; margin: .5rem 0; overflow-wrap: anywhere; }
+        /* Navigation zurück zur Arcade und zur Memory-Hall-of-Fame. */
+        .memory-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem; margin: .9rem auto; }
+        .memory-nav a { display: inline-flex; align-items: center; justify-content: center;
+                        padding: .55rem .8rem; border: 2px solid #fa79d5; border-radius: .35rem;
+                        background: #191128; color: #79f6ff; font: inherit; font-size: .9em;
+                        font-weight: bold; text-decoration: none; text-align: center; }
+        .memory-nav a:hover { background: #351e4b; }
+        .memory-nav a:focus-visible { outline: 2px solid #79f6ff; outline-offset: 2px; }
+    </style>
+</head>
+<body>
+<main class="game-page">
+    <h1>Mü's Memory</h1>
+
+    <p class="version-label" id="version-label">✦ BETA v1.0.0 ✦</p>
+
+    <nav class="memory-nav" aria-label="Spielnavigation">
+        <a href="/games/">← BACK TO GAMES</a>
+        <a href="/games/memory/leaderboard.html">🏆 HALL OF FAME</a>
+    </nav>
+
+    <section class="game-ui" aria-label="Spielstand">
+        <p>Züge: <span id="moves">0</span></p>
+        <p>Paare: <span id="matches">0</span> / 6</p>
+        <button id="restart-btn" type="button">Neu starten</button>
+    </section>
+
+    <section id="game-board" class="game-board" aria-label="Memory-Spielfeld"></section>
+</main>
+
+<!-- Erst sichtbar, wenn alle sechs Paare gefunden wurden. -->
+<div id="win-overlay" class="win-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="win-title">
+    <div class="win-panel">
+        <div class="card-burst" aria-hidden="true">
+            <span class="mini-card card-1">♥</span>
+            <span class="mini-card card-2">♠</span>
+            <span class="mini-card card-3">♦</span>
+            <span class="mini-card card-4">♣</span>
+        </div>
+        <img src="assets/mue-happy.png" alt="Mü wirft fröhlich Spielkarten in die Luft" class="win-mue" />
+        <h2 id="win-title">GESCHAFFT!</h2>
+        <p>Du hast alle sechs Paare gefunden!</p>
+        <p class="win-score">Züge: <span id="final-moves">0</span></p>
+        <form id="score-form" novalidate>
+            <label for="player-name">In die Hall of Fame eintragen?</label>
+            <input id="player-name" name="player_name" type="text" minlength="3" maxlength="15"
+                   placeholder="Dein Spielername" autocomplete="nickname" required />
+            <button id="save-score-btn" type="submit">★ SCORE SPEICHERN</button>
+        </form>
+        <p id="score-status" role="status" aria-live="polite"></p>
+        <button id="play-again-btn" type="button">NOCHMAL SPIELEN</button>
+        <nav class="memory-nav" aria-label="Navigation nach Spielende">
+            <a href="/games/">← BACK TO GAMES</a>
+            <a href="/games/memory/leaderboard.html">🏆 HALL OF FAME</a>
+        </nav>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
